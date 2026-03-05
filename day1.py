@@ -29,5 +29,5 @@ response = openai.chat.completions.create(
         "content":message
     }]
 )
-
-print(response.choices[0].message.content)
+print(response)
+# print(response.choices[0].message.content)
