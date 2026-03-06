@@ -29,6 +29,3 @@ class Website:
         self.text = soup.body.get_text(separator="\n", strip=True)
 
 
-web = Website("https://edwarddonner.com")
-print(web.title)
-print(web.text)
