@@ -52,3 +52,53 @@ def user_prompt(websiteurl):
     return user_prompt
 
 print(user_prompt(web))
+
+'''
+The API from OpenAI expects to receive messages
+in a particular structure.Many of the other
+APIs share this structure
+
+    [
+        {"role":"system", "content":"system message goes here"},
+        {"role":"user", "content":"user message goes here"}
+    ]
+'''
+
+#Example
+messages = [
+    {"role": "system", "content": "You are a snarky assistant"},
+    {"role": "user", "content": "What is 2 + 2?"}
+]
+
+#Using the chat completion model with system and user message
+response2 = openai.chat.completions.create(
+    model="llama-3.1-8b-instant",
+    messages = messages
+)
+
+print(response2.choices[0].message.content)
+
+
+#The same format but via a function
+
+def message_for(websiteurl):
+    # Return a properly formatted messages list: one system message and one user message
+    return [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt(websiteurl)}
+    ]
+
+# print(message_for(web))
+
+
+#A function that summarize it all
+
+def sumarize(url):
+    website = Website(url)
+    response = openai.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages = message_for(website)
+    )
+    return response.choices[0].message.content
+
+print(sumarize("https://edwarddonner.com"))
