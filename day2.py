@@ -11,10 +11,11 @@ if not api_key:
 else:
     print("API key was found!")
 
-openai=OpenAI(
-    api_key=api_key,
-    base_url="https://api.groq.com/openai/v1"
-)
+
+
+OLLAMA_API = "http://localhost:11434/api/chat"
+HEADERS = {"Content-Type": "application/json"}
+MODEL = "phi3"
 
 headers = {
     "Authorization": f"Bearer {api_key}",
@@ -24,11 +25,17 @@ headers = {
 
 
 payload = {
-    "model": "llama-3.1-8b-instant",
+    "model": "phi3",
     "messages": [{
         "role":"user",
         "content":"Tell me a fun fact"
-    }]
+    }],
+    "stream":False
 }
+
+response = requests.post(OLLAMA_API, json=payload, headers=HEADERS)
+print(response.json()['message']['content'])
+# print(response.json())
+
 
 
