@@ -9,8 +9,7 @@ import json
 from typing import List
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
-from IPython.display import Markdown, display, update_display
-from openai import OpenAI
+
 
 # Initialize and constants
 
@@ -46,4 +45,4 @@ class Website:
     
 
 ed = Website("https://edwarddonner.com")
-print(ed.links)
+ed.links
