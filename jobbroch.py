@@ -39,8 +39,8 @@ WORK FLOW:
 
 ## Functions & variables to used
 1 link_system_prompt - direct llm to scrape links related to job seekers [ :) ]
-2 user_link_prompt function - provide the llm the website url and direct it to do the same
-3 get_link function - will use the link_system_prompt and user_link_prompt
+2 user_link_prompt function - provide the llm the website url and direct it to do the same [:)]
+3 get_link function - will use the link_system_prompt and user_link_prompt and the ai to filter related links
 4 get_content_link function - will fetch the content of site and all links using get_link function
 5 job_brief_system_prompt - direct llm to create a job seeking briefing based on the url that the user will provide
 6 user_job_url_prompt - passes the url of interest to the get_content_link function to obtain all contents & links 
@@ -72,7 +72,7 @@ Ignore links related to:
 - Social media (Twitter, LinkedIn, Facebook, Instagram)
 - Login / Sign up pages
 
-Return your answer as STRICT JSON.
+Return your answer as STRICT JSON dont put any trippl back ticks
 
 Each item must contain:
 "type" – the category of the page
@@ -112,6 +112,25 @@ Here are the links found on the website:
     return user_prompt
 
 
-print(get_user_link_prompt("https://huggingface.co/"))
+# print(get_user_link_prompt("https://huggingface.co/"))
 
+hugging_face = "https://huggingface.co/"
     
+# 3 get_link function
+
+def get_links(url):
+    webby = Website(url)
+    response = openai.chat.completions.create(
+        model = model,
+        messages = [
+            {"role":"system", "content":link_system_prompt},
+            {"role":"user", "content":get_user_link_prompt(url)}
+        ]
+    )
+    result = response.choices[0].message.content
+
+    print("RAW MODEL OUTPUT:")
+    print(result)
+    return json.loads(result)
+
+print(get_links(hugging_face))
