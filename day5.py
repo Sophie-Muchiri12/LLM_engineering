@@ -1,6 +1,4 @@
 from linksite import Website
-# imports
-# If these fail, please check you're running from an 'activated' environment with (llms) in the command prompt
 
 import os
 import requests
