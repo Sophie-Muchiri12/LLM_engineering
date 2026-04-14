@@ -152,9 +152,20 @@ def get_content_link(weburl):
     '''
 
     for link in links['links']:
-        print(f"{link['type']}: ")
-        url = link['url']
-        result += Website(url).get_contents()
+        try:
+    
+            url = link.get('url')
+            types = link.get('type')
+            
+            result += f"\n{types}\n"
+            result += Website.get_contents(url)
+
+        except Exception as e:
+            print("Skipping link:", link.get("url"))
+            print("Reason:", e)
+
+
+        
 
     return result
 
