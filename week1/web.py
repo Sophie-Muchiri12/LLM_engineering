@@ -28,6 +28,11 @@ class Website:
             irrelevant.decompose()
         self.text = soup.body.get_text(separator="\n", strip=True)
 
+    def get_contents(self):
+
+        return f"Webpage Title: \n{self.title}\n Webpage "
+
+
 
 # web = Website("https://edwarddonner.com")
 # print(web.title)
