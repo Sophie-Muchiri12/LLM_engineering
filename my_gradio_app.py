@@ -19,7 +19,7 @@ openai = OpenAI(
     base_url='https://api.groq.com/openai/v1'
 )
 
-system_prompt = 'You are a helpful assistant'
+system_prompt = 'You are a helpful assistant that responds in markdown without code'
 
 def messages(prompt):
 
@@ -49,7 +49,8 @@ def shout(text):
 shout("Hello!")
 
 gr.Interface(
-    fn=shout,
+    fn=messages,
     inputs="textbox",
     outputs="textbox"
 ).launch(inbrowser=True)
+
