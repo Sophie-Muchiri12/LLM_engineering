@@ -19,7 +19,7 @@ openai = OpenAI(
     base_url='https://api.groq.com/openai/v1'
 )
 
-system_prompt = 'You are a helpful assistant'
+system_prompt = 'You are a helpful assistant that responds in markdown without code block'
 
 def messages(prompt):
 
@@ -49,7 +49,47 @@ def shout(text):
 shout("Hello!")
 
 gr.Interface(
-    fn=shout,
+    fn=messages, #callback function
     inputs="textbox",
     outputs="textbox"
 ).launch(inbrowser=True)
+
+message_input = gr.Textbox(
+    label="Your message: ",
+    info="Enter a message for Groq",
+    lines=7
+    
+    )
+
+message_output = gr.Markdown(
+    label="Groq response"
+)
+
+
+# view = gr.Interface(
+#     fn=messages,
+#     title="Groq",
+#     inputs=[message_input],
+#     outputs=[message_output]
+# )
+
+# view.launch(inbrowser=True)
+
+
+# wanting gradio to respond in markdown
+
+markdown_view = gr.Interface(
+    fn=messages,
+    title="Groq",
+    inputs=[message_input],
+    outputs=[message_output],
+    examples=[
+        "Explain the Transformer architecture to a layperson"
+        "Explain the Transformer architecture to an aspiring  AI Engineer"
+    ],
+    flagging_mode="never"
+)
+
+markdown_view.launch()
+
+#streaming - generator with gradio
